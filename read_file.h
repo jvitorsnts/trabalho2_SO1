@@ -8,14 +8,16 @@
 #include <string>
 #include <vector>
 
-using namespace std;
 
+using namespace std;
+class MemoryHandling;
 struct Params {
     int managementType; //1-Bitmap 2-DoublyLinkedList
     int memorySize; //Bytes
     int minBlock; //Bytes
     int alocationType; //1-? 2-?
-    vector<MemoryHandling *> manages; //Alocações e desalocações
+	// seguido de uma sequencia de alocações e desalocações, que serao armazenadas em um vetor
+    vector <MemoryHandling *> manages;
 };
 
 class MemoryHandling
@@ -60,7 +62,7 @@ private:
 	Params *params;
 
 public:
-	File() {
+	File() : params(new Params){
 		myfile.open("entrada.txt");
 		if (!myfile.is_open()) {
 			cout << "Erro ao abrir o arquivo!\n";
@@ -90,29 +92,32 @@ public:
 		// ad: alocação ou desalocação
 		// al: quantos bytes aloca
 		// i: id
-		int ad, al, i;
+		char ad;
+		int al, i;
 
 		while (myfile >> ad) {
+			MemoryHandling *h;
 			if (ad == 'A') {
 				myfile >> al >> i;
-				auto *h = new MemoryHandling(ad, al, i);
+				h = new MemoryHandling(ad, al, i);
 			} else {
 				myfile >> i;
-				auto *h = new MemoryHandling(ad, 0, i);
+				h = new MemoryHandling(ad, 0, i);
 			}
+			params->manages.push_back(h);
 		}
 	}
 
 	void printParams() {
-		cout << "Tipo de gerência: " << params->managementType;
-		cout << "Tamanho memória: " << params->memorySize;
-		cout << "Bloco minimo: " << params->minBlock;
-		cout << "Algoritmo: " << params->alocationType;
+		cout << "Tipo de gerência: " << params->managementType << endl;
+		cout << "Tamanho memória: " << params->memorySize<< endl;
+		cout << "Bloco minimo: " << params->minBlock<< endl;
+		cout << "Algoritmo: " << params->alocationType<< endl;
 		
 		auto iter = params->manages.begin();
 		for(; iter < params->manages.end(); iter++) {
 			MemoryHandling *h = *iter;
-			cout << *h;
+			cout << *h<< endl;
 		}
 	}	
 

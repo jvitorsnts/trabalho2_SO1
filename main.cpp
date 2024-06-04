@@ -9,7 +9,7 @@
 using namespace std;
 
 int main() {
-    Params *params;
+    // Params *params;
 
     File f;
     f.read_file();
