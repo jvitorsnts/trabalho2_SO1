@@ -1,16 +1,14 @@
 #ifndef READ_FILE_H
 #define READ_FILE_H
 
-#endif //READ_FILE_H
-
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
-
+#include "source/headers/MemoryHandling.h"
 
 using namespace std;
-class MemoryHandling;
+
 struct Params {
     int managementType; //1-Bitmap 2-DoublyLinkedList
     int memorySize; //Bytes
@@ -18,41 +16,6 @@ struct Params {
     int alocationType; //1-? 2-?
 	// seguido de uma sequencia de alocações e desalocações, que serao armazenadas em um vetor
     vector <MemoryHandling *> manages;
-};
-
-class MemoryHandling
-{
-private:
-    char action;
-    int size;
-    int id;
-
-public:
-	MemoryHandling(char a, int s, int i) {
-		action = a;
-		size = s;
-		id = i;
-	}
-	
-    char getAction() const {
-        return action;
-    }
-
-    int getSize() const {
-        return size;
-    }
-
-    int getId() const {
-        return id;
-    }
-
-	friend ostream &operator<<(ostream& os, const MemoryHandling& h) {
-		os <<
-			"action = " << h.action <<
-				" size = " << h.size <<
-					" id = " << h.id << endl;
-		return os;
-	}
 };
 
 class File
@@ -110,14 +73,14 @@ public:
 
 	void printParams() {
 		cout << "Tipo de gerência: " << params->managementType << endl;
-		cout << "Tamanho memória: " << params->memorySize<< endl;
-		cout << "Bloco minimo: " << params->minBlock<< endl;
-		cout << "Algoritmo: " << params->alocationType<< endl;
+		cout << "Tamanho memória: " << params->memorySize << endl;
+		cout << "Bloco minimo: " << params->minBlock << endl;
+		cout << "Algoritmo: " << params->alocationType << endl;
 		
 		auto iter = params->manages.begin();
 		for(; iter < params->manages.end(); iter++) {
 			MemoryHandling *h = *iter;
-			cout << *h<< endl;
+			cout << *h << endl;
 		}
 	}	
 
@@ -125,3 +88,5 @@ public:
 		return params;
 	}
 };
+
+#endif //READ_FILE_H
