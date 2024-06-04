@@ -1,5 +1,16 @@
-# Prerequisites
-*.d
+# CClion
+.idea
+
+# Build
+bin
+obj
+build
+**/*.tar.gz
+
+# Executables
+*.exe
+*.app
+*.out
 
 # Compiled Object files
 *.slo
@@ -16,17 +27,8 @@
 *.dylib
 *.dll
 
-# Fortran module files
-*.mod
-*.smod
-
 # Compiled Static libraries
 *.lai
 *.la
 *.a
 *.lib
-
-# Executables
-*.exe
-*.out
-*.app
