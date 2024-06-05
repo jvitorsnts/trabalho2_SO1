@@ -82,10 +82,17 @@ public:
 
 	MemoryManager * createMemoryManager() {
 		if (params->managementType == 1) {
-			memManager = new BitmapMemoryManager(params->memorySize, params->minBlock);
+			memManager = new BitmapMemoryManager(params->memorySize, params->minBlock, params->alocationType);
 		} else {
-			memManager = new LinkedListMemoryManager(params->memorySize, params->minBlock);
+			memManager = new LinkedListMemoryManager(params->memorySize, params->minBlock, params->alocationType);
 		}
+
+		// adds the operations to the memory manager
+		auto iter = params->manages.begin();
+		for(; iter < params->manages.end(); iter++) {
+            MemoryHandling *h = *iter;
+            memManager->addOperation(*h);
+        }
 		return memManager;
 	}
 

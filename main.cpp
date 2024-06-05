@@ -18,8 +18,9 @@ int main() {
 	// memManager->executeOperations();
 	// memManager->printMemory();
 	MemoryManager *memManager = f.createMemoryManager();
-	memManager->printStatistics();
+	memManager->executeOperations();
 	memManager->printMemory();
+	memManager->printStatistics();
 	return 0;
     // Memoria de tantos bytes
     // Cada bloco com um quantidade minima de bytes

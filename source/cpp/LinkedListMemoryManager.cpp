@@ -22,3 +22,17 @@ void LinkedListMemoryManager::printMemory() const {
     // Implement the printMemory method
     std::cout << "Printing memory" << std::endl;
 }
+
+int LinkedListMemoryManager::firstFit(int size) {
+    // finds the first sequence of blocks that are empty and have enough space to allocate the size
+    // and then fills the blocks with 1 and returns the index of the first block
+    std::cout << "First fit" << std::endl;
+    return 0;
+}
+
+int LinkedListMemoryManager::nextFit(int size) {
+    // finds the next sequence of blocks that are empty and have enough space to allocate the size
+    // and then fills the blocks with 1 and returns the index of the first block
+    std::cout << "Next fit" << std::endl;
+    return 0;
+}

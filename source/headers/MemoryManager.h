@@ -12,6 +12,7 @@ class MemoryManager {
 protected:
     int totalMemorySize;
     int minimumBlockSize;
+    int allocationType;
     std::vector<MemoryHandling> memOperations;
 
     int bytesInUse;
@@ -21,13 +22,16 @@ protected:
     int numDeallocations;
 
 public:
-    MemoryManager(int totalSize, int minBlockSize)
-        : totalMemorySize(totalSize), minimumBlockSize(minBlockSize), bytesInUse(0),
+    MemoryManager(int totalSize, int minBlockSize, int allocType)
+        : totalMemorySize(totalSize), minimumBlockSize(minBlockSize), allocationType(allocType),bytesInUse(0),
           allocatedBytes(0), deallocatedBytes(0), numAllocations(0), numDeallocations(0) {}
 
     virtual void allocate(int size) = 0; // Pure virtual function
     virtual void deallocate(int index) = 0; // Pure virtual function
     virtual void printMemory() const = 0; // Pure virtual function
+
+    virtual int firstFit(int size) = 0;
+    virtual int nextFit(int size) = 0;
 
     void printStatistics() const;
 

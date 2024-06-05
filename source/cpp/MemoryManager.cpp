@@ -6,9 +6,9 @@
 #include <iostream>
 
 void MemoryManager::printStatistics() const {
-    std::cout << "Bytes in use: " << getBytesInUse() << std::endl;
-    std::cout << "Allocated bytes: " << getAllocatedBytes() << std::endl;
-    std::cout << "Deallocated bytes: " << getDeallocatedBytes() << std::endl;
-    std::cout << "Number of allocations: " << getNumAllocations() << std::endl;
-    std::cout << "Number of deallocations: " << getNumDeallocations() << std::endl;
+    std::cout << getBytesInUse() << std::endl; // quantidade de bytes em uso (ocupados)
+    std::cout << getAllocatedBytes() << std::endl; // quantidade de bytes alocados
+    std::cout << getDeallocatedBytes() << std::endl; // quantidade de bytes desalocados
+    std::cout << getNumAllocations() << std::endl; // número de alocações
+    std::cout << getNumDeallocations() << std::endl; // número de desalocações
 }
