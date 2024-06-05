@@ -6,9 +6,14 @@
 #include "../headers/LinkedListMemoryManager.h"
 #include <iostream>
 
-void LinkedListMemoryManager::allocate(int size) {
+LinkedListMemoryManager::LinkedListMemoryManager(int totalSize, int minBlockSize, int allocType)
+    : MemoryManager(totalSize, minBlockSize, allocType) {
+        memoryList.push_back({0, totalSize, true});
+}
+
+int LinkedListMemoryManager::allocate(int size) {
     // Implement the allocate method
-      // prints the size for now
+    // prints the size for now
     std::cout << "Allocating " << size << " bytes" << std::endl;
 }
 

@@ -1,9 +1,6 @@
 #include <iostream>
 #include <vector>
 #include "read_file.h"
-#include "source/headers/Bitmap.h"
-#include "source/headers/DoublyLinkedList.h"
-
 
 using namespace std;
 
@@ -12,14 +9,16 @@ int main() {
 
     File f;
     f.read_file();
-	f.printParams();
+	// f.printParams();
 	// params = f.getParams();
 	// MemoryManager *memManager = f.getMemoryManager();
 	// memManager->executeOperations();
 	// memManager->printMemory();
 	MemoryManager *memManager = f.createMemoryManager();
 	memManager->executeOperations();
+	cout << endl;
 	memManager->printMemory();
+	cout << endl;
 	memManager->printStatistics();
 	return 0;
     // Memoria de tantos bytes

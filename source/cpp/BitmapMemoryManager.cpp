@@ -6,6 +6,9 @@
 #include "../headers/BitmapMemoryManager.h"
 #include <iostream>
 
+BitmapMemoryManager::BitmapMemoryManager(int totalSize, int minBlockSize, int allocType)
+    : MemoryManager(totalSize, minBlockSize, allocType), memoryBitmap(totalSize / minBlockSize, 0) {}
+
 int BitmapMemoryManager::allocate(int size) {
     // Implement the allocate method
     // Update the memoryBitmap accordingly
@@ -75,5 +78,48 @@ int BitmapMemoryManager::firstFit(int size) {
 int BitmapMemoryManager::nextFit(int size) {
     // Implement the nextFit method
     // Return the index of the next block that fits the size
+    int blocks = size / minimumBlockSize;
+    int count = 0;
+    int index = -1;
+
+    for (int i = managerIndex; i < memoryBitmap.size(); i++) {
+        if (memoryBitmap[i] == 0) {
+            count++;
+            if (count == blocks) {
+                index = i - blocks + 1;
+                break;
+            }
+        } else {
+            count = 0;
+        }
+    }
+
+    if (count != blocks) {
+        count = 0;
+        for (int i = 0; i < managerIndex; i++) {
+            if (memoryBitmap[i] == 0) {
+                count++;
+                if (count == blocks) {
+                    index = i - blocks + 1;
+                    break;
+                }
+            } else {
+                count = 0;
+            }
+        }
+    }
+
+    if (index != -1) {
+        managerIndex = index+blocks+1;
+        while (memoryBitmap[managerIndex] == 1) {
+            if (managerIndex == memoryBitmap.size()) managerIndex =  0;
+            else managerIndex++;
+        }
+
+        for (int i = index; i < index + blocks; i++) {
+            memoryBitmap[i] = 1;
+        }
+    }
+    return index;
     return -1;
 }

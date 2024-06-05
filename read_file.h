@@ -6,8 +6,6 @@
 #include <string>
 #include <vector>
 
-#include "source/headers/Bitmap.h"
-#include "source/headers/DoublyLinkedList.h"
 #include "source/headers/MemoryHandling.h"
 #include "source/headers/MemoryManager.h"
 #include "source/headers/BitmapMemoryManager.h"

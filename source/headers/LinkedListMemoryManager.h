@@ -20,10 +20,7 @@ private:
     std::list<MemoryBlock> memoryList;
 
 public:
-    LinkedListMemoryManager(int totalSize, int minBlockSize, int allocType)
-        : MemoryManager(totalSize, minBlockSize, allocType) {
-        memoryList.push_back({0, totalSize, true});
-    }
+    LinkedListMemoryManager(int totalSize, int minBlockSize, int allocType);
 
     int allocate(int size) override;
     void deallocate(int index) override;

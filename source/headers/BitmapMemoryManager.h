@@ -14,8 +14,7 @@ private:
     std::vector<int> memoryBitmap;
 
 public:
-    BitmapMemoryManager(int totalSize, int minBlockSize, int allocType)
-        : MemoryManager(totalSize, minBlockSize, allocType), memoryBitmap(totalSize / minBlockSize, 0) {}
+    BitmapMemoryManager(int totalSize, int minBlockSize, int allocType);
 
     int allocate(int size) override;
     void deallocate(int index) override;

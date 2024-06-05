@@ -10,6 +10,8 @@
 
 class MemoryManager {
 protected:
+    int managerIndex = 0;  //Ultimo indice da gerencia de memoria(usado para nextFit)
+
     int totalMemorySize;
     int minimumBlockSize;
     int allocationType;
@@ -22,9 +24,7 @@ protected:
     int numDeallocations;
 
 public:
-    MemoryManager(int totalSize, int minBlockSize, int allocType)
-        : totalMemorySize(totalSize), minimumBlockSize(minBlockSize), allocationType(allocType),bytesInUse(0),
-          allocatedBytes(0), deallocatedBytes(0), numAllocations(0), numDeallocations(0) {}
+    MemoryManager(int totalSize, int minBlockSize, int allocType);
 
     virtual int allocate(int size) = 0; // Pure virtual function
     virtual void deallocate(int index) = 0; // Pure virtual function
@@ -35,43 +35,14 @@ public:
 
     void printStatistics() const;
 
-    void addOperation( MemoryHandling& operation) {
-        memOperations.push_back(operation);
-    }
+    void addOperation( MemoryHandling& operation);
+    void executeOperations();
 
-    void executeOperations() {
-        for (auto& operation : memOperations) {
-            int index;
-            if (operation.getAction() == 'A') {
-                index = allocate(operation.getSize());
-
-                operation.setIndex(index);
-                cout << "operation index " << operation.getIndex() << endl;
-            } else if (operation.getAction() == 'D') {
-                deallocate(operation.getId());
-            }
-        }
-    }
-
-    int getBytesInUse() const {
-        return bytesInUse;
-    }
-
-    int getAllocatedBytes() const {
-        return allocatedBytes;
-    }
-
-    int getDeallocatedBytes() const {
-        return deallocatedBytes;
-    }
-
-    int getNumAllocations() const {
-        return numAllocations;
-    }
-
-    int getNumDeallocations() const {
-        return numDeallocations;
-    }
+    int getBytesInUse() const;
+    int getAllocatedBytes() const;
+    int getDeallocatedBytes() const;
+    int getNumAllocations() const;
+    int getNumDeallocations() const;
 };
 
 #endif // MEMORYMANAGER_H
