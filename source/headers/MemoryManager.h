@@ -26,7 +26,7 @@ public:
         : totalMemorySize(totalSize), minimumBlockSize(minBlockSize), allocationType(allocType),bytesInUse(0),
           allocatedBytes(0), deallocatedBytes(0), numAllocations(0), numDeallocations(0) {}
 
-    virtual void allocate(int size) = 0; // Pure virtual function
+    virtual int allocate(int size) = 0; // Pure virtual function
     virtual void deallocate(int index) = 0; // Pure virtual function
     virtual void printMemory() const = 0; // Pure virtual function
 
@@ -35,14 +35,18 @@ public:
 
     void printStatistics() const;
 
-    void addOperation(const MemoryHandling& operation) {
+    void addOperation( MemoryHandling& operation) {
         memOperations.push_back(operation);
     }
 
     void executeOperations() {
-        for (const auto& operation : memOperations) {
+        for (auto& operation : memOperations) {
+            int index;
             if (operation.getAction() == 'A') {
-                allocate(operation.getSize());
+                index = allocate(operation.getSize());
+
+                operation.setIndex(index);
+                cout << "operation index " << operation.getIndex() << endl;
             } else if (operation.getAction() == 'D') {
                 deallocate(operation.getId());
             }

@@ -25,7 +25,7 @@ public:
         memoryList.push_back({0, totalSize, true});
     }
 
-    void allocate(int size) override;
+    int allocate(int size) override;
     void deallocate(int index) override;
     void printMemory() const override;
 

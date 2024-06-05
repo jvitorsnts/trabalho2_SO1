@@ -6,7 +6,7 @@
 #include "../headers/BitmapMemoryManager.h"
 #include <iostream>
 
-void BitmapMemoryManager::allocate(int size) {
+int BitmapMemoryManager::allocate(int size) {
     // Implement the allocate method
     // Update the memoryBitmap accordingly
     int index;
@@ -17,12 +17,25 @@ void BitmapMemoryManager::allocate(int size) {
         index = nextFit(size);
     }
     cout << "Block allocated at index " << index << endl;
+
+    return index;
 }
 
-void BitmapMemoryManager::deallocate(int index) {
+void BitmapMemoryManager::deallocate(int id) {
     // Implement the deallocate method
     // Update the memoryBitmap accordingly
-    cout << "Deallocating block at index " << index << endl;
+    cout<<"Finding dealocate"<<endl;
+     for (auto& operation : memOperations) {
+        if(operation.getId() == id){
+            for (int i = operation.getIndex(); i < operation.getIndex() + (operation.getSize()/minimumBlockSize); i++) {
+                memoryBitmap[i] = 0;
+            }
+            break;
+        }
+            
+     }
+
+    cout << "Deallocating block of id " << id << endl;
 }
 
 void BitmapMemoryManager::printMemory() const {

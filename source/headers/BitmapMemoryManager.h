@@ -17,7 +17,7 @@ public:
     BitmapMemoryManager(int totalSize, int minBlockSize, int allocType)
         : MemoryManager(totalSize, minBlockSize, allocType), memoryBitmap(totalSize / minBlockSize, 0) {}
 
-    void allocate(int size) override;
+    int allocate(int size) override;
     void deallocate(int index) override;
     void printMemory() const override;
 

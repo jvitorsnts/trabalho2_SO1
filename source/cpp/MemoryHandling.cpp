@@ -20,3 +20,11 @@ int MemoryHandling::getSize() const {
 int MemoryHandling::getId() const {
     return id;
 }
+
+int MemoryHandling::getIndex() const {
+    return index;
+}
+
+void MemoryHandling::setIndex(int i) {
+    index = i;
+}

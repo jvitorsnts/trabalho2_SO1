@@ -11,6 +11,7 @@ private:
     char action;
     int size;
     int id;
+	int index;
 
 public:
 	MemoryHandling(char a, int s, int i);
@@ -20,6 +21,10 @@ public:
     int getSize() const;
 
     int getId() const;
+	
+    int getIndex() const;
+
+	void setIndex(int i);
 
 	friend ostream &operator<<(ostream& os, const MemoryHandling& h) {
 		os <<
