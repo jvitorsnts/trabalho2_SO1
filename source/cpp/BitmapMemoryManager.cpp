@@ -3,20 +3,23 @@
 //
 
 // BitmapMemoryManager.cpp
-#include "BitmapMemoryManager.h"
+#include "../headers/BitmapMemoryManager.h"
 #include <iostream>
 
 void BitmapMemoryManager::allocate(int size) {
     // Implement the allocate method
     // Update the memoryBitmap accordingly
+    cout << "Allocating " << size << " bytes" << endl;
 }
 
 void BitmapMemoryManager::deallocate(int index) {
     // Implement the deallocate method
     // Update the memoryBitmap accordingly
+    cout << "Deallocating block at index " << index << endl;
 }
 
 void BitmapMemoryManager::printMemory() const {
     // Implement the printMemory method
     // Print the memoryBitmap
+ cout<<"Printing memory"<<endl;
 }

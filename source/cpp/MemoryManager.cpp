@@ -2,7 +2,7 @@
 // Created by gabri on 04/06/2024.
 //
 
-#include "MemoryManager.h"
+#include "../headers/MemoryManager.h"
 #include <iostream>
 
 void MemoryManager::printStatistics() const {

@@ -29,6 +29,8 @@ public:
     virtual void deallocate(int index) = 0; // Pure virtual function
     virtual void printMemory() const = 0; // Pure virtual function
 
+    void printStatistics() const;
+
     void addOperation(const MemoryHandling& operation) {
         memOperations.push_back(operation);
     }
@@ -61,15 +63,6 @@ public:
 
     int getNumDeallocations() const {
         return numDeallocations;
-    }
-
-    void printStatistics() const
-    {
-        std::cout << "Bytes in use: " << getBytesInUse() << std::endl;
-        std::cout << "Allocated bytes: " << getAllocatedBytes() << std::endl;
-        std::cout << "Deallocated bytes: " << getDeallocatedBytes() << std::endl;
-        std::cout << "Number of allocations: " << getNumAllocations() << std::endl;
-        std::cout << "Number of deallocations: " << getNumDeallocations() << std::endl;
     }
 };
 
