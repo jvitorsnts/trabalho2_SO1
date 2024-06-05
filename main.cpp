@@ -14,7 +14,12 @@ int main() {
     f.read_file();
 	f.printParams();
 	// params = f.getParams();
-
+	// MemoryManager *memManager = f.getMemoryManager();
+	// memManager->executeOperations();
+	// memManager->printMemory();
+	MemoryManager *memManager = f.createMemoryManager();
+	memManager->printStatistics();
+	return 0;
     // Memoria de tantos bytes
     // Cada bloco com um quantidade minima de bytes
     // Memoria dividida em unidades de alocação

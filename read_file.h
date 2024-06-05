@@ -5,7 +5,13 @@
 #include <fstream>
 #include <string>
 #include <vector>
+
+#include "source/headers/Bitmap.h"
+#include "source/headers/DoublyLinkedList.h"
 #include "source/headers/MemoryHandling.h"
+#include "source/headers/MemoryManager.h"
+#include "source/headers/BitmapMemoryManager.h"
+#include "source/headers/LinkedListMemoryManager.h"
 
 using namespace std;
 
@@ -23,9 +29,10 @@ class File
 private:
 	ifstream myfile;
 	Params *params;
+	MemoryManager *memManager;
 
 public:
-	File() : params(new Params){
+	File() : params(new Params),  memManager(nullptr){
 		myfile.open("entrada.txt");
 		if (!myfile.is_open()) {
 			cout << "Erro ao abrir o arquivo!\n";
@@ -58,7 +65,8 @@ public:
 		char ad;
 		int al, i;
 
-		while (myfile >> ad) {
+		while (myfile >> ad)
+		{
 			MemoryHandling *h;
 			if (ad == 'A') {
 				myfile >> al >> i;
@@ -69,6 +77,16 @@ public:
 			}
 			params->manages.push_back(h);
 		}
+
+	}
+
+	MemoryManager * createMemoryManager() {
+		if (params->managementType == 1) {
+			memManager = new BitmapMemoryManager(params->memorySize, params->minBlock);
+		} else {
+			memManager = new LinkedListMemoryManager(params->memorySize, params->minBlock);
+		}
+		return memManager;
 	}
 
 	void printParams() {
@@ -86,6 +104,10 @@ public:
 
 	Params * getParams() {
 		return params;
+	}
+
+	MemoryManager * getMemoryManager() {
+		return memManager;
 	}
 };
 
