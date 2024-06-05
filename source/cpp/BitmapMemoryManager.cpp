@@ -20,6 +20,9 @@ void BitmapMemoryManager::deallocate(int index) {
 
 void BitmapMemoryManager::printMemory() const {
     // Implement the printMemory method
-    // Print the memoryBitmap
- cout<<"Printing memory"<<endl;
+    // iterate over the bitmap and print the values all in the same line without spaces between
+    for (const auto &block : memoryBitmap) {
+        cout << block;
+    }
+    cout << endl;
 }
