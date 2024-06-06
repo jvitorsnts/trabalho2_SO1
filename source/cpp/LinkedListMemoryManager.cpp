@@ -12,9 +12,24 @@ LinkedListMemoryManager::LinkedListMemoryManager(int totalSize, int minBlockSize
 }
 
 int LinkedListMemoryManager::allocate(int size) {
-    // Implement the allocate method
+    // Implement the allocate method using a linked list
     // prints the size for now
+    int index = 0;
     std::cout << "Allocating " << size << " bytes" << std::endl;
+    if (allocationType == 1) {
+        index = firstFit(size);
+    } else {
+        index = nextFit(size);
+    }
+    if (index != -1) {
+        int blocksNeeded = size / minimumBlockSize + (size % minimumBlockSize != 0);
+        allocatedBytes += blocksNeeded * minimumBlockSize;
+        numAllocations++;
+        std::cout << "Block allocated at index " << index << std::endl;
+    } else {
+        std::cout << "Block could not be allocated" << std::endl;
+    }
+    return index;
 }
 
 void LinkedListMemoryManager::deallocate(int index) {
