@@ -66,7 +66,7 @@ int BitmapMemoryManager::firstFit(int size) {
     int blocks = size / minimumBlockSize + (size % minimumBlockSize != 0);
     int count = 0;
     int index = -1;
-    for (int i = 0; i < memoryBitmap.size(); i++) {
+    for (std::vector<int>::size_type i = 0; i < memoryBitmap.size(); i++) {
         if (memoryBitmap[i] == 0) {
             count++;
             if (count == blocks) {
@@ -92,7 +92,7 @@ int BitmapMemoryManager::nextFit(int size) {
     int count = 0;
     int index = -1;
 
-    for (int i = managerIndex; i < memoryBitmap.size(); i++) {
+    for (std::vector<int>::size_type i = managerIndex; i < memoryBitmap.size(); i++) {
         if (memoryBitmap[i] == 0) {
             count++;
             if (count == blocks) {

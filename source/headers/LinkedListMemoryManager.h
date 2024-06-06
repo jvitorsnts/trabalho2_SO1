@@ -10,14 +10,18 @@
 #include <list>
 
 struct MemoryBlock {
+    int id;
     int start;
     int size;
     bool isFree;
+    MemoryBlock* nextBlock;
+    MemoryBlock* previousBlock;
 };
 
 class LinkedListMemoryManager : public MemoryManager {
 private:
-    std::list<MemoryBlock> memoryList;
+    MemoryBlock* head;
+    MemoryBlock* lastAllocated;  // Novo atributo para armazenar o último bloco utilizado (next fit)
 
 public:
     LinkedListMemoryManager(int totalSize, int minBlockSize, int allocType);
