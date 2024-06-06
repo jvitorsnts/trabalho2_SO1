@@ -22,7 +22,7 @@ int LinkedListMemoryManager::allocate(int size) {
     // Implement the allocate method using a linked list
     // prints the size for now
 
-    std::cout << "Allocating " << size << " bytes" << std::endl;
+    //std::cout << "Allocating " << size << " bytes" << std::endl;
     int startAddress = 0;
     if (allocationType == 1) {
         startAddress = firstFit(size);
@@ -34,9 +34,9 @@ int LinkedListMemoryManager::allocate(int size) {
         int blocksNeeded = size / minimumBlockSize + (size % minimumBlockSize != 0);
         allocatedBytes += blocksNeeded * minimumBlockSize;
         numAllocations++;
-        std::cout << "Block allocated at address " << startAddress << std::endl;
+        //std::cout << "Block allocated at address " << startAddress << std::endl;
     } else {
-        std::cout << "Block could not be allocated" << std::endl;
+        //std::cout << "Block could not be allocated" << std::endl;
     }
     return startAddress;
 }
@@ -44,7 +44,7 @@ int LinkedListMemoryManager::allocate(int size) {
 void LinkedListMemoryManager::deallocate(int id) {
     // Implement the deallocate method
         // prints the index for now
-    cout<<"Finding dealocate"<<endl;
+    //cout<<"Finding dealocate"<<endl;
      for (auto& operation : memOperations) {
         if(operation.getId() == id){
             int blocks = operation.getSize() / minimumBlockSize + (operation.getSize() % minimumBlockSize != 0);
@@ -96,15 +96,15 @@ void LinkedListMemoryManager::deallocate(int id) {
             
      }
 
-    cout << "Deallocating block of id " << id << endl;
+    //cout << "Deallocating block of id " << id << endl;
 }
 
 void LinkedListMemoryManager::printMemory() const {
     // Implement the printMemory method
-    std::cout << "Printing memory" << std::endl;
+    //std::cout << "Printing memory" << std::endl;
     MemoryBlock* current = head;
     while (current != nullptr) {
-        std::cout <<  current->size << ", "
+        std::cout <<  current->size << " "
                   << (current->isFree ? "0" : "1") << std::endl;
         current = current->nextBlock;
     }
@@ -113,6 +113,11 @@ void LinkedListMemoryManager::printMemory() const {
 int LinkedListMemoryManager::firstFit(int size) {
     // Ponteiro para percorrer a lista de blocos de memória
     MemoryBlock* current = head;
+
+    // Tamanho ocupado pela alocação considerando o bloco minimo
+    while (size%minimumBlockSize != 0) {
+        size++;
+    } 
 
     // Percorre a lista de blocos para encontrar o primeiro bloco livre que seja grande o suficiente
     while (current != nullptr) {
@@ -148,8 +153,8 @@ int LinkedListMemoryManager::firstFit(int size) {
         current = current->nextBlock;
     }
 
-    std::cout << "First fit" << std::endl;
-    cout << size << endl;
+    //std::cout << "First fit" << std::endl;
+    //cout << size << endl;
     return -1; // Se não encontrou um bloco grande o suficiente, retorna -1
 }
 
@@ -160,6 +165,11 @@ int LinkedListMemoryManager::nextFit(int size) {
     // Ponteiro para percorrer a lista de blocos de memória, começando do último bloco utilizado
     MemoryBlock* current = lastAllocated ? lastAllocated : head;
     MemoryBlock* startPoint = current;
+
+    // Tamanho ocupado pela alocação considerando o bloco minimo
+    while (size%minimumBlockSize != 0) {
+        size++;
+    } 
 
     do {
         if (current->isFree && current->size >= size) {
@@ -197,7 +207,7 @@ int LinkedListMemoryManager::nextFit(int size) {
         current = current->nextBlock ? current->nextBlock : head;
     } while (current != startPoint);
     
-    std::cout << "Next fit" << std::endl;
-    cout << size << endl;
+    //std::cout << "Next fit" << std::endl;
+    //cout << size << endl;
     return -1; // Se não encontrou um bloco grande o suficiente, retorna -1
 }

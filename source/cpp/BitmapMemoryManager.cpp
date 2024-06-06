@@ -13,20 +13,20 @@ int BitmapMemoryManager::allocate(int size) {
     // Implement the allocate method
     // Update the memoryBitmap accordingly
     int index;
-    cout << "Allocating " << size << " bytes" << endl;
+    //cout << "Allocating " << size << " bytes" << endl;
     if (allocationType == 1) {
      index = firstFit(size);
     } else {
         index = nextFit(size);
     }
-    cout << "Block allocated at index " << index << endl;
+    //cout << "Block allocated at index " << index << endl;
     if (index != -1) {
        int blocksNeeded = size / minimumBlockSize + (size % minimumBlockSize != 0);
         allocatedBytes += blocksNeeded * minimumBlockSize;
         numAllocations++;
-        cout << "Block allocated at index " << index << endl;
+        //cout << "Block allocated at index " << index << endl;
     } else {
-        cout << "Block could not be allocated" << endl;
+        //cout << "Block could not be allocated" << endl;
     }
     return index;
 }
@@ -34,7 +34,7 @@ int BitmapMemoryManager::allocate(int size) {
 void BitmapMemoryManager::deallocate(int id) {
     // Implement the deallocate method
     // Update the memoryBitmap accordingly
-    cout<<"Finding dealocate"<<endl;
+    //cout<<"Finding dealocate"<<endl;
      for (auto& operation : memOperations) {
         if(operation.getId() == id){
             int blocks = operation.getSize() / minimumBlockSize + (operation.getSize() % minimumBlockSize != 0);
@@ -48,7 +48,7 @@ void BitmapMemoryManager::deallocate(int id) {
             
      }
 
-    cout << "Deallocating block of id " << id << endl;
+    //cout << "Deallocating block of id " << id << endl;
 }
 
 void BitmapMemoryManager::printMemory() const {
@@ -88,7 +88,7 @@ int BitmapMemoryManager::firstFit(int size) {
 int BitmapMemoryManager::nextFit(int size) {
     // Implement the nextFit method
     // Return the index of the next block that fits the size
-    int blocks = size / minimumBlockSize;
+    int blocks = size / minimumBlockSize + (size % minimumBlockSize != 0);
     int count = 0;
     int index = -1;
 
@@ -104,6 +104,7 @@ int BitmapMemoryManager::nextFit(int size) {
         }
     }
 
+    // Se chegar ao final do bitmap e não conseguir alocar
     if (count != blocks) {
         count = 0;
         for (int i = 0; i < managerIndex; i++) {
@@ -120,9 +121,9 @@ int BitmapMemoryManager::nextFit(int size) {
     }
 
     if (index != -1) {
-        managerIndex = index+blocks+1;
+        managerIndex = index+blocks;
         while (memoryBitmap[managerIndex] == 1) {
-            if (managerIndex == memoryBitmap.size()) managerIndex =  0;
+            if (managerIndex == (int)memoryBitmap.size()) managerIndex =  0;
             else managerIndex++;
         }
 
@@ -131,5 +132,4 @@ int BitmapMemoryManager::nextFit(int size) {
         }
     }
     return index;
-    return -1;
 }

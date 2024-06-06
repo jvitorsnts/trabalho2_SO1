@@ -36,10 +36,10 @@ void MemoryManager::executeOperations() {
             index = allocate(operation.getSize());
 
             operation.setIndex(index);
-            cout << "operation index (LL)" << operation.getIndex() << endl << endl;
+            // cout << "operation index (LL)" << operation.getIndex() << endl << endl;
         } else if (operation.getAction() == 'D') {
             deallocate(operation.getId());
-            cout << endl;
+            //cout << endl;
         }
     }
 }
