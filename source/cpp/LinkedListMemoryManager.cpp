@@ -32,10 +32,22 @@ int LinkedListMemoryManager::allocate(int size) {
     return index;
 }
 
-void LinkedListMemoryManager::deallocate(int index) {
+void LinkedListMemoryManager::deallocate(int id) {
     // Implement the deallocate method
         // prints the index for now
-    std::cout << "Deallocating block at index " << index << std::endl;
+    std::cout << "Deallocating block at id " << id << std::endl;
+    for (auto& operation : memOperations) {
+        if(operation.getId() == id){
+            int blocks = operation.getSize() / minimumBlockSize + (operation.getSize() % minimumBlockSize != 0);
+            deallocatedBytes += blocks * minimumBlockSize;
+            numDeallocations++;
+            for (int i = operation.getIndex(); i < operation.getIndex() + (operation.getSize()/minimumBlockSize); i++) {
+                // todo: dealocates the block
+            }
+            break;
+        }
+
+    }
 }
 
 void LinkedListMemoryManager::printMemory() const {
@@ -47,6 +59,7 @@ int LinkedListMemoryManager::firstFit(int size) {
     // finds the first sequence of blocks that are empty and have enough space to allocate the size
     // and then fills the blocks with 1 and returns the index of the first block
     std::cout << "First fit" << std::endl;
+    cout << size << endl;
     return 0;
 }
 
@@ -54,5 +67,6 @@ int LinkedListMemoryManager::nextFit(int size) {
     // finds the next sequence of blocks that are empty and have enough space to allocate the size
     // and then fills the blocks with 1 and returns the index of the first block
     std::cout << "Next fit" << std::endl;
+    cout << size << endl;
     return 0;
 }
