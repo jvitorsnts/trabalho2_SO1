@@ -9,7 +9,15 @@ MemoryManager::MemoryManager(int totalSize, int minBlockSize, int allocType)
     : totalMemorySize(totalSize), minimumBlockSize(minBlockSize), allocationType(allocType),bytesInUse(0),
         allocatedBytes(0), deallocatedBytes(0), numAllocations(0), numDeallocations(0) {}
 
+void MemoryManager::setBytesInUse(int bytes) {
+    this->bytesInUse = bytes;
+}
+
 void MemoryManager::printStatistics() const {
+// calculating bytes in use: (total bytes allocated - total bytes deallocated)
+    // sets bytes in use
+    const_cast<MemoryManager*>(this)->setBytesInUse(allocatedBytes - deallocatedBytes);
+
     std::cout << getBytesInUse() << std::endl; // quantidade de bytes em uso (ocupados)
     std::cout << getAllocatedBytes() << std::endl; // quantidade de bytes alocados
     std::cout << getDeallocatedBytes() << std::endl; // quantidade de bytes desalocados

@@ -38,6 +38,7 @@ public:
     void addOperation( MemoryHandling& operation);
     void executeOperations();
 
+    void setBytesInUse(int bytesInUse);
     int getBytesInUse() const;
     int getAllocatedBytes() const;
     int getDeallocatedBytes() const;

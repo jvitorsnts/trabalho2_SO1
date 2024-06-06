@@ -20,7 +20,14 @@ int BitmapMemoryManager::allocate(int size) {
         index = nextFit(size);
     }
     cout << "Block allocated at index " << index << endl;
-
+    if (index != -1) {
+       int blocksNeeded = size / minimumBlockSize + (size % minimumBlockSize != 0);
+        allocatedBytes += blocksNeeded * minimumBlockSize;
+        numAllocations++;
+        cout << "Block allocated at index " << index << endl;
+    } else {
+        cout << "Block could not be allocated" << endl;
+    }
     return index;
 }
 
@@ -30,6 +37,9 @@ void BitmapMemoryManager::deallocate(int id) {
     cout<<"Finding dealocate"<<endl;
      for (auto& operation : memOperations) {
         if(operation.getId() == id){
+            int blocks = operation.getSize() / minimumBlockSize + (operation.getSize() % minimumBlockSize != 0);
+            deallocatedBytes += blocks * minimumBlockSize;
+            numDeallocations++;
             for (int i = operation.getIndex(); i < operation.getIndex() + (operation.getSize()/minimumBlockSize); i++) {
                 memoryBitmap[i] = 0;
             }
@@ -53,7 +63,7 @@ void BitmapMemoryManager::printMemory() const {
 int BitmapMemoryManager::firstFit(int size) {
 // finds the first sequence of blocks that are empty and have enough space to allocate the size
 // and then fills the blocks with 1 and returns the index of the first block
-    int blocks = size / minimumBlockSize;
+    int blocks = size / minimumBlockSize + (size % minimumBlockSize != 0);
     int count = 0;
     int index = -1;
     for (int i = 0; i < memoryBitmap.size(); i++) {
