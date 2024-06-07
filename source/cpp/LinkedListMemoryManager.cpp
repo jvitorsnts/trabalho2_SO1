@@ -125,26 +125,7 @@ int LinkedListMemoryManager::firstFit(int size) {
             // Se o bloco é grande o suficiente, aloca a memória
             int startAddress = current->start;
 
-            // Se o bloco é exatamente do tamanho requerido, marca-o como ocupado
-            if (current->size == size) {
-                current->isFree = false;
-            } else {
-                // Caso contrário, divide o bloco em dois
-                MemoryBlock* newBlock = new MemoryBlock;
-                newBlock->start = current->start + size;
-                newBlock->size = current->size - size;
-                newBlock->isFree = true;
-                newBlock->nextBlock = current->nextBlock;
-                newBlock->previousBlock = current;
-
-                if (current->nextBlock) {
-                    current->nextBlock->previousBlock = newBlock;
-                }
-
-                current->nextBlock = newBlock;
-                current->size = size;
-                current->isFree = false;
-            }
+           allocateMemory(current, size);
 
             return startAddress; // Retorna o endereço inicial do bloco alocado
         }
@@ -156,6 +137,29 @@ int LinkedListMemoryManager::firstFit(int size) {
     //std::cout << "First fit" << std::endl;
     //cout << size << endl;
     return -1; // Se não encontrou um bloco grande o suficiente, retorna -1
+}
+
+void LinkedListMemoryManager::allocateMemory(MemoryBlock* current, int size){
+     // Se o bloco é exatamente do tamanho requerido, marca-o como ocupado
+        if (current->size == size) {
+            current->isFree = false;
+        } else {
+            // Caso contrário, divide o bloco em dois
+            MemoryBlock* newBlock = new MemoryBlock;
+            newBlock->start = current->start + size;
+            newBlock->size = current->size - size;
+            newBlock->isFree = true;
+            newBlock->nextBlock = current->nextBlock;
+            newBlock->previousBlock = current;
+
+            if (current->nextBlock) {
+                current->nextBlock->previousBlock = newBlock;
+            }
+
+            current->nextBlock = newBlock;
+            current->size = size;
+            current->isFree = false;
+        }
 }
 
 int LinkedListMemoryManager::nextFit(int size) {
@@ -176,26 +180,7 @@ int LinkedListMemoryManager::nextFit(int size) {
             // Se o bloco é grande o suficiente, aloca a memória
             int startAddress = current->start;
 
-            // Se o bloco é exatamente do tamanho requerido, marca-o como ocupado
-            if (current->size == size) {
-                current->isFree = false;
-            } else {
-                // Caso contrário, divide o bloco em dois
-                MemoryBlock* newBlock = new MemoryBlock;
-                newBlock->start = current->start + size;
-                newBlock->size = current->size - size;
-                newBlock->isFree = true;
-                newBlock->nextBlock = current->nextBlock;
-                newBlock->previousBlock = current;
-
-                if (current->nextBlock) {
-                    current->nextBlock->previousBlock = newBlock;
-                }
-
-                current->nextBlock = newBlock;
-                current->size = size;
-                current->isFree = false;
-            }
+            allocateMemory(current, size);
 
             // Atualiza o ponteiro do último bloco utilizado
             lastAllocated = current;

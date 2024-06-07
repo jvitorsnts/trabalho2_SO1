@@ -29,6 +29,7 @@ public:
     int allocate(int size) override;
     void deallocate(int index) override;
     void printMemory() const override;
+    void allocateMemory(MemoryBlock* current, int size);
 
     int firstFit(int size) override;
     int nextFit(int size) override;
