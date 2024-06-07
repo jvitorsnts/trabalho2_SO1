@@ -120,21 +120,7 @@ int LinkedListMemoryManager::firstFit(int size) {
             // Se o bloco é grande o suficiente, aloca a memória
             int startAddress = current->getStart();
 
-            // Se o bloco é exatamente do tamanho requerido, marca-o como ocupado
-            if (current->getSize() == size) {
-                current->setFree(false);
-            } else {
-                // Caso contrário, divide o bloco em dois
-                MemoryBlock* newBlock = new MemoryBlock(current->getStart() + size, current->getSize() - size, true, current->getNextBlock(), current);
-
-                if (current->getNextBlock()) {
-                    current->getNextBlock()->setPreviousBlock(newBlock);
-                }
-
-                current->setNextBlock(newBlock);
-                current->setSize(size);
-                current->setFree(false);
-            }
+            allocateMemory(current, size);
 
             return startAddress; // Retorna o endereço inicial do bloco alocado
         }
@@ -146,6 +132,24 @@ int LinkedListMemoryManager::firstFit(int size) {
     //std::cout << "First fit" << std::endl;
     //cout << size << endl;
     return -1; // Se não encontrou um bloco grande o suficiente, retorna -1
+}
+
+void allocateMemory(MemoryBlock* current, int size){
+    // Se o bloco é exatamente do tamanho requerido, marca-o como ocupado
+    if (current->getSize() == size) {
+        current->setFree(false);
+    } else {
+        // Caso contrário, divide o bloco em dois
+        MemoryBlock* newBlock = new MemoryBlock(current->getStart() + size, current->getSize() - size, true, current->getNextBlock(), current);
+
+        if (current->getNextBlock()) {
+            current->getNextBlock()->setPreviousBlock(newBlock);
+        }
+
+        current->setNextBlock(newBlock);
+        current->setSize(size);
+        current->setFree(false);
+    }
 }
 
 int LinkedListMemoryManager::nextFit(int size) {
@@ -165,22 +169,6 @@ int LinkedListMemoryManager::nextFit(int size) {
         if (current->isFree() && current->getSize() >= size) {
             // Se o bloco é grande o suficiente, aloca a memória
             int startAddress = current->getStart();
-
-            // Se o bloco é exatamente do tamanho requerido, marca-o como ocupado
-            if (current->getSize() == size) {
-                current->setFree(false);
-            } else {
-                // Caso contrário, divide o bloco em dois
-                MemoryBlock* newBlock = new MemoryBlock(current->getStart() + size, current->getSize() - size, true, current->getNextBlock(), current);
-
-                if (current->getNextBlock()) {
-                    current->getNextBlock()->setPreviousBlock(newBlock);
-                }
-
-                current->setNextBlock(newBlock);
-                current->setSize(size);
-                current->setFree(false);
-            }
 
             // Atualiza o ponteiro do último bloco utilizado
             lastAllocated = current;
