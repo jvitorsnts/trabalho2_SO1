@@ -7,16 +7,8 @@
 #define LINKEDLISTMEMORYMANAGER_H
 
 #include "MemoryManager.h"
+#include "MemoryBlock.h"
 #include <list>
-
-struct MemoryBlock {
-    int id;
-    int start;
-    int size;
-    bool isFree;
-    MemoryBlock* nextBlock;
-    MemoryBlock* previousBlock;
-};
 
 class LinkedListMemoryManager : public MemoryManager {
 private:

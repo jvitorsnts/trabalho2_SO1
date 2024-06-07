@@ -14,7 +14,7 @@ all: $(TARGET)
 
 $(TARGET): $(OBJ_DIR) $(BIN_DIR) $(OBJECTS) main.cpp
 	$(CXX) $(CXXFLAGS) main.cpp $(OBJECTS) -o $(TARGET)
-	cp -f entrada.txt $(BIN_DIR)/entrada.txt
+	if not exist $(BIN_DIR)\entrada.txt copy entrada.txt $(BIN_DIR)\entrada.txt
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
@@ -32,6 +32,6 @@ run: clean all input
 	./$(TARGET)
 
 input:
-	cp -f entrada.txt $(BIN_DIR)/entrada.txt
+	if not exist $(BIN_DIR)\entrada.txt copy entrada.txt $(BIN_DIR)\entrada.txt
 
 .PHONY: all clean
